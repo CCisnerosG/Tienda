@@ -25,6 +25,7 @@ public class CategoriaServiceImpl implements CategoriaService {
             categorias.removeIf(x -> !x.isActivo());
         }
         
+        
         return categorias;
     }
     
