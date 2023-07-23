@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/springframework/Controller.java to edit this template
- */
 package com.Tienda.controller;
 
 import com.Tienda.domain.Categoria;
 import com.Tienda.service.CategoriaService;
 import com.Tienda.service.ProductoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +22,13 @@ public class PruebasController {
     private CategoriaService categoriaService;
 
     @GetMapping("/listado")
-    public String listado(Model model) {
+    public String listado(Model model, HttpSession httpSession) {
         var productos = productoService.getProductos(false);
         var categorias = categoriaService.getCategorias(false);
         model.addAttribute("productos", productos);
         model.addAttribute("totalProductos", productos.size());
         model.addAttribute("categorias", categorias);
+        model.addAttribute("EmailUsuario",httpSession.getAttribute("Email"));
         return "/pruebas/listado";
     }
 
