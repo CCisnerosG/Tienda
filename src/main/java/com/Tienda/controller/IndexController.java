@@ -30,7 +30,7 @@ public class IndexController {
         }
         
         if (user != null){
-            Usuario usuario = usuarioDao.finByUsername(user.getUsername());
+            Usuario usuario = usuarioDao.findByUsername(user.getUsername());
             
             httpSession.setAttribute("Email", usuario.getCorreo());
         }
