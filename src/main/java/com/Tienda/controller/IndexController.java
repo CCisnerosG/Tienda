@@ -1,39 +1,22 @@
 package com.Tienda.controller;
 
-import com.Tienda.dao.UsuarioDao;
-import com.Tienda.domain.Usuario;
-import jakarta.servlet.http.HttpSession;
+import com.Tienda.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
+ 
+ 
 @Controller
 public class IndexController {
     
     @Autowired
-    UsuarioDao usuarioDao;
+    ProductoService productoService;
     
     @RequestMapping("/")
-    public String page(Model model , HttpSession httpSession) {
-        //model.addAttribute("attribute", "value");
-        
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        
-        UserDetails user= null;
-        
-        if(principal instanceof UserDetails){
-            user = (UserDetails) principal;
-        }
-        
-        if (user != null){
-            Usuario usuario = usuarioDao.findByUsername(user.getUsername());
-            
-            httpSession.setAttribute("Email", usuario.getCorreo());
-        }
+    public String page(Model model) { 
+        var listaProductos = productoService.getProductos(true);
+        model.addAttribute("productos", listaProductos);
         return "index";
     }
     
